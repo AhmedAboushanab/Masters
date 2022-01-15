@@ -1,0 +1,129 @@
+library(tidyverse)
+library(reshape)
+
+#Read and filter data
+data = read.csv("Total_L2_Additional taxa - Copy (2).csv")
+China = filter(data, Country == "China")
+Egypt = filter(data, Country == "Egypt")
+
+#Subdividing the data
+China_2 = China[ , 2:8]
+Egypt_2 = Egypt[ , 2:8]
+
+#Comparing between countries for the same taxa level
+ggplot(data) +
+  geom_boxplot(mapping = aes(x = factor(Country, levels = c("Italy", "The Netherlands", "Canada", "Sweden",
+                                                            "China", "Denmark", "Egypt", "Finland", "USA",
+                                                            "Russia", "Madagascar"))
+                                        , y = k__Bacteria.p__Bacteroidetes)) + #fill = factor(Susciptability.to.SARS.CoV.2, levels = c("Very High", "High", "Medium", "Low" )))) 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  #scale_fill_discrete(name="Susceptibility level") 
+  labs(x = "Country" , y = "Bacteroidetes Relative Abundance") +
+  ggtitle("Bacteroidetes Relative Abundance between countries") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data) +
+  geom_boxplot(mapping = aes(x = factor(Country, levels = c("Italy", "The Netherlands", "Canada", "Sweden",
+                                                            "China", "Denmark", "Egypt", "Finland", "USA",
+                                                            "Russia", "Madagascar"))
+                             , y = k__Bacteria.p__Firmicutes)) + #fill = factor(Susciptability.to.SARS.CoV.2, levels = c("Very High", "High", "Medium", "Low" )))) 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  #scale_fill_discrete(name="Susceptibility level") 
+  labs(x = "Country" , y = "Firmicutes Relative Abundance") +
+  ggtitle("Firmicutes Relative Abundance between countries") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data) +
+  geom_boxplot(mapping = aes(x = factor(Country, levels = c("Italy", "The Netherlands", "Canada", "Sweden",
+                                                            "China", "Denmark", "Egypt", "Finland", "USA",
+                                                            "Russia", "Madagascar"))
+                             , y = k__Bacteria.p__Actinobacteria)) + # fill = factor(Susciptability.to.SARS.CoV.2, levels = c("Very High", "High", "Medium", "Low" )))) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  #scale_fill_discrete(name="Susceptibility level") 
+  labs(x = "Country" , y = "Actinobacteria Relative Abundance") +
+  ggtitle("Actinobacteria Relative Abundance between countries") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data) +
+  geom_boxplot(mapping = aes(x = factor(Country, levels = c("Italy", "The Netherlands", "Canada", "Sweden",
+                                                            "China", "Denmark", "Egypt", "Finland", "USA",
+                                                            "Russia", "Madagascar"))
+                             , y = k__Archaea.p__Euryarchaeota)) + # fill = factor(Susciptability.to.SARS.CoV.2, levels = c("Very High", "High", "Medium", "Low" )))) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  #scale_fill_discrete(name="Susceptibility level") 
+  labs(x = "Country" , y = "Euryarchaeota Relative Abundance") +
+  ggtitle("Euryarchaeota Relative Abundance between countries") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data) +
+  geom_boxplot(mapping = aes(x = factor(Country, levels = c("Italy", "The Netherlands", "Canada", "Sweden",
+                                                            "China", "Denmark", "Egypt", "Finland", "USA",
+                                                            "Russia", "Madagascar"))
+                             , y = k__Bacteria.p__Verrucomicrobia)) + # fill = factor(Susciptability.to.SARS.CoV.2, levels = c("Very High", "High", "Medium", "Low" )))) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  #scale_fill_discrete(name="Susceptibility level") 
+  labs(x = "Country" , y = "Verrucomicrobia Relative Abundance") +
+  ggtitle("Verrucomicrobia Relative Abundance between countries") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data) +
+  geom_boxplot(mapping = aes(x = factor(Country, levels = c("Italy", "The Netherlands", "Canada", "Sweden",
+                                                            "China", "Denmark", "Egypt", "Finland", "USA",
+                                                            "Russia", "Madagascar"))
+                             , y = k__Bacteria.p__Proteobacteria)) + # fill = factor(Susciptability.to.SARS.CoV.2, levels = c("Very High", "High", "Medium", "Low" )))) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  #scale_fill_discrete(name="Susceptibility level") 
+  labs(x = "Country" , y = "Proteobacteria Relative Abundance") +
+  ggtitle("Proteobacteria Relative Abundance between countries") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data) +
+  geom_boxplot(mapping = aes(x = factor(Country, levels = c("Italy", "The Netherlands", "Canada", "Sweden",
+                                                            "China", "Denmark", "Egypt", "Finland", "USA",
+                                                            "Russia", "Madagascar"))
+                             , y = k__Viruses.p__Viruses_noname)) + # fill = factor(Susciptability.to.SARS.CoV.2, levels = c("Very High", "High", "Medium", "Low" )))) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  #scale_fill_discrete(name="Susceptibility level") 
+  labs(x = "Country" , y = "Viruses_noname Relative Abundance") +
+  ggtitle("Viruses_noname Relative Abundance between countries") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+#plotting all countries together in one figure
+data2 = data[ , 3:9]
+data3 = melt(data2)
+data3$Country = factor(data3$Country, levels = c("Italy", "The Netherlands", "Canada", "Sweden",
+                                           "China", "Denmark", "Egypt", "Finland", "USA",
+                                           "Russia", "Madagascar"))
+ggplot(data3) + 
+  geom_boxplot(mapping = aes(x = variable, y = value)) + #, fill= variable)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  scale_colour_manual(values = c("Firmicutes" = "#E08214", "Bacteroidetes" = "#E08214")) +
+  scale_fill_discrete(name="Phyla") +
+  labs(x = "Phyla" , y = "Relative Abundance") +
+  ggtitle("Countries' Relative Abundance of Different Phyla") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size=15)) + #font size
+  facet_wrap(~ Country)
+
+#Firmicutes/Bacteroidetes ratio
+ggplot(data) +
+  geom_boxplot(mapping = aes(y = factor(Country, levels = c("Italy", "The Netherlands", "Canada", "Sweden",
+                                                            "China", "Denmark", "Egypt", "Finland", "USA",
+                                                            "Russia", "Madagascar"))
+                             , x = (k__Bacteria.p__Bacteroidetes/k__Bacteria.p__Firmicutes)/10)) + #fill = factor(Susciptability.to.SARS.CoV.2, levels = c("Very High", "High", "Medium", "Low" )))) 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  #scale_fill_discrete(name="Susceptibility level") 
+  labs(x = "Bacteroidetes/Firmicutes" , y = "Country") +
+  ggtitle("Bacteroidetes/Firmicutes ratio") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data) +
+  geom_boxplot(mapping = aes(y = factor(Country, levels = c("Italy", "The Netherlands", "Canada", "Sweden",
+                                                            "China", "Denmark", "Egypt", "Finland", "USA",
+                                                            "Russia", "Madagascar"))
+                             , x = (k__Bacteria.p__Firmicutes/k__Bacteria.p__Bacteroidetes)/10)) + #fill = factor(Susciptability.to.SARS.CoV.2, levels = c("Very High", "High", "Medium", "Low" )))) 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  #scale_fill_discrete(name="Susceptibility level") 
+  labs(x = "Firmicutes/Bacteroidetes" , y = "Country") +
+  ggtitle("Firmicutes/Bacteroidetes ratio") +
+  theme(plot.title = element_text(hjust = 0.5))
